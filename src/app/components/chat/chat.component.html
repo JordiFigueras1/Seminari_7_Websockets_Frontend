@@ -1,5 +1,4 @@
 <div class="chat-container">
-
   <!-- Cabecera del chat -->
   <div class="chat-header">
     <h1>Chat</h1>
@@ -7,16 +6,15 @@
 
   <!-- Contenedor de los mensajes -->
   <div class="chat-messages">
-    <div *ngFor="let data of messages"[ngClass]="{'message-receive': data.type === 'received', 'message-send': data.type === 'sent'}">
-      {{ data.text }}
+    <div *ngFor="let msg of messages" class="message">
+      <strong>{{ msg.author }}</strong>: {{ msg.message }}
+      <small>{{ msg.date }}</small>
     </div>
   </div>
 
   <!-- Barra de entrada de texto -->
   <div class="chat-input">
-    <input [(ngModel)]="message" (keydown.enter)="sendMessage()" placeholder="Type your message..." />
-    <button (click)="sendMessage()">Send</button>
+    <input [(ngModel)]="messageText" (keydown.enter)="sendMessage()" placeholder="Escribe un mensaje..." />
+    <button (click)="sendMessage()">Enviar</button>
   </div>
-
 </div>
-

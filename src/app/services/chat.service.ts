@@ -1,21 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import { map } from 'rxjs/operators';
+import { ChatMessage } from '../models/chatMessage.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
+  constructor(private socket: Socket) {}
 
-  constructor(private socket: Socket) { }
-
-  sendMessage(msg: string) {
-    this.socket.emit('message', msg);
+  // Enviar un mensaje JSON al backend
+  sendMessage(msg: ChatMessage) {
+    this.socket.emit('sendMessage', msg);
   }
 
-  getMessage() {
-    return this.socket.fromEvent<string>('message-receive');
-    
+  // Escuchar mensajes JSON emitidos por el backend
+  getMessage(): Observable<ChatMessage> {
+    return new Observable<ChatMessage>((observer) => {
+      this.socket.on('message-receive', (data: ChatMessage) => {
+        observer.next(data);
+      });
+    });
   }
 }

@@ -1,4 +1,5 @@
 export interface ChatMessage {
-    text: string;
-    type: 'sent' | 'received'; // Solo estos dos tipos
-  }
+  message: string;  // Texto del mensaje
+  author: string;   // Autor del mensaje
+  date: string;     // Fecha en formato ISO 8601
+}
